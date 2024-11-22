@@ -1,0 +1,23 @@
+
+// C01-ex02
+void ft_swap(int *a, int *b){
+    int temp;
+    temp = *a;
+    *a = *b;
+    *b = temp;
+};
+
+// C01-ex03
+void ft_div_mod(int a, int b, int *div, int *mod){
+    *div = a / b ;
+    *mod = a % b ;
+};
+
+// C01-ex04
+
+void ft_ultimate_div_mod(int *a, int *b){
+    int q = *a / *b;
+    int r = *a % *b;
+    *a = q;
+    *b = r;
+};
