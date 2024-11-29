@@ -1,5 +1,131 @@
 #include <unistd.h>
-// C01-ex02
+//C00-00
+void ft_putchar(char c){
+    write(1,&c,1);
+}
+//C00-01
+void ft_print_alphabet(){
+    char c = 'a';
+    for(int i = 0; i < 26 ; i++) {
+        write(1, &c, 1);
+        c ++;
+    }    
+}
+
+//C00-02
+void ft_print_alphabet_rev(){
+    char c = 'z';
+    for(int i = 0; i < 26 ; i++) {
+        write(1, &c, 1);
+        c --;
+    }    
+}
+
+//C00-03
+void ft_print_numbers(){
+    char c = '1';
+    for(int i = 0; i < 9 ; i++) {
+        write(1, &c, 1);
+        c ++;
+    }    
+}
+
+//C00-04
+void ft_is_negative(int c){
+    if(c >= 0){
+        write(1,"p",1);
+    }else{
+        write(1,"n",1);
+    }
+}
+
+//C00-05
+void	ft_print_comb(void)
+{
+	int	a;
+	int	b;
+	int	c;
+
+	a = '0';
+	while (a <= '7')
+	{
+		b = a + 1;
+		while (b <= '8')
+		{
+			c = b + 1;
+			while (c <= '9')
+			{
+				write (1, &a, 1);
+				write (1, &b, 1);
+				write (1, &c, 1);
+				if (a != '7'){
+                    write (1, ", ", 2);
+                }else{
+                    write(1, "\n",1);
+                }
+					
+				++c;
+			}
+			++b;
+		}
+		++a;
+	}
+}
+
+//C00-06
+void	ft_print_comb2(void)
+{
+	for(int i = 0; i < 100 ; i++){
+		for(int j = 0; j < 100 ; j++){
+			char c1 = (i % 10) + 48;
+			char c2 = (( i - (i % 10)) / 10) + 48 ;
+
+			char c3 = (j % 10) + 48;
+			char c4 = (( j - (j % 10)) / 10) + 48 ;
+
+			write(1,&c4,1);
+			write(1,&c3,1);
+			write(1," ",1);
+			write(1,&c2,1);
+			write(1,&c1,1);
+			if ( (i+j) != 198 ){
+				write(1,", ",2);
+			}else{
+				write(1,"\n",2);
+			}
+		}
+	}
+}
+
+//C00-07
+void ft_putnbr(int nb)
+{
+    if(nb > 10){
+        ft_putnbr((nb - (nb % 10))/10);
+        int r = 48 + (nb % 10);
+        write(1,&r,1);
+    }else{
+        char r = nb + 48;
+        write(1,&r,1);
+    }
+}
+
+//C00-08
+void ft_ft(int *nbr){
+    *nbr = 42;
+};
+
+//C01-00
+void ft_ft(int *nbr){
+    *nbr = 42;
+};
+
+//C02-00
+void ft_ultimate_ft(int *********nbr){
+    *********nbr = 42;
+};
+
+//C01-02
 void ft_swap(int *a, int *b){
     int temp;
     temp = *a;
@@ -7,13 +133,13 @@ void ft_swap(int *a, int *b){
     *b = temp;
 };
 
-// C01-ex03
+//C01-03
 void ft_div_mod(int a, int b, int *div, int *mod){
     *div = a / b ;
     *mod = a % b ;
 };
 
-// C01-ex04
+//C01-04
 void ft_ultimate_div_mod(int *a, int *b){
     int q = *a / *b;
     int r = *a % *b;
@@ -21,7 +147,7 @@ void ft_ultimate_div_mod(int *a, int *b){
     *b = r;
 };
 
-// C01-ex05
+//C01-05
 void ft_putstr(char *str){
     int i = 0;
     while(str[i] != '\0'){
@@ -30,7 +156,7 @@ void ft_putstr(char *str){
     }
 };
 
-// C01-ex06
+//C01-06
 int ft_strlen(char *str){
     int i = 0;
     while(str[i] != '\0'){
@@ -39,7 +165,7 @@ int ft_strlen(char *str){
     return i;
 };
 
-// C01-ex06
+//C01-06
 void ft_rev_int_tab(int *tab, int size){
     int temp_tab[size];
     for(int i=0; i<size;i++){
@@ -50,7 +176,7 @@ void ft_rev_int_tab(int *tab, int size){
     }
 };
 
-// C01-ex08
+//C01-08
 void ft_sort_int_tab(int *tab, int size){
     for (int i = 0; i < size - 1; i++) {          // Number of passes
         for (int j = 0; j < size - i - 1; j++) {  // Compare adjacent elements
@@ -118,10 +244,30 @@ int ft_str_is_lowercase(char *str){
     return 1;
 };
 
+//C02-05
 int ft_str_is_uppercase(char *str){
     for(int i = 0; i < ft_strlen(str); i++){
         if('A'>str[i])return 0;
         if('Z'<str[i])return 0;
     }
     return 1;
+};
+
+//C02-06
+int ft_str_is_printable(char *str){
+    for(int i = 0; i < ft_strlen(str); i++){
+        if(32>(int)str[i])return 0;
+        if(126<(int)str[i])return 0;
+    }
+    return 1;
+};
+
+//C02-07
+char *ft_strupcase(char *str){
+    for(int i = 0; i < ft_strlen(str); i++){
+        if(ft_str_is_lowercase(&str[i]) == 1){
+            str[i] = str[i] - 'a' + 'A';
+        }
+    }
+    return str;
 };
