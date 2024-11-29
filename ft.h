@@ -111,9 +111,7 @@ void ft_putnbr(int nb)
 }
 
 //C00-08
-void ft_ft(int *nbr){
-    *nbr = 42;
-};
+// We don't talk about the C00-08
 
 //C01-00
 void ft_ft(int *nbr){
@@ -263,11 +261,14 @@ int ft_str_is_printable(char *str){
 };
 
 //C02-07
-char *ft_strupcase(char *str){
-    for(int i = 0; i < ft_strlen(str); i++){
-        if(ft_str_is_lowercase(&str[i]) == 1){
-            str[i] = str[i] - 'a' + 'A';
+char *ft_strupcase(char *str) {
+    if (!str) {
+        return NULL;
+    }
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (str[i] >= 'a' && str[i] <= 'z') {
+            str[i] = str[i] - ('a' - 'A');
         }
     }
     return str;
-};
+}
