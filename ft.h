@@ -371,6 +371,17 @@ void ft_putstr_non_printable(char *str){
 };
 
 //C02-12
-void *ft_print_memory(void *addr, unsigned int size){
+void *ft_print_memory(void *addr){
+    // 00000010a161f40: 426f 6e6a 6f75 7220 6c65 7320 616d 696e Bonjour les amin
+    // 00000010a161f50: 6368 6573 090a 0963 2020 6573 7420 666f ches...c est fo
+    
+    // unsigned int q = size / 16 ;
+    // unsigned int r = size % 16 ;
+    int c = 0;
+    void **addr_of_addr = &addr;
+    while((addr_of_addr >> 4) >= 1) c++;
+
+    ft_print_numbers(c);
+
     return addr;
 };
