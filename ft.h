@@ -100,7 +100,7 @@ void	ft_print_comb2(void)
 //C00-07
 void ft_putnbr(int nb)
 {
-    if(nb > 10){
+    if(nb >= 10){
         ft_putnbr((nb - (nb % 10))/10);
         int r = 48 + (nb % 10);
         write(1,&r,1);
@@ -216,6 +216,9 @@ char *ft_strncpy(char *dest, char *src, unsigned int n){
 
 //C02-02
 int ft_str_is_alpha(char *str){
+    if (str[1] == '\0') {
+        return ('A' <= str[0] && str[0] <= 'Z') || ('a' <= str[0] && str[0] <= 'z');
+    }
     for(int i = 0; i < ft_strlen(str); i++){
         if('A'>str[i])return 0;
         if('z'<str[i])return 0;
@@ -272,3 +275,102 @@ char *ft_strupcase(char *str) {
     }
     return str;
 }
+
+//C02-08
+char *ft_strlowcase(char *str) {
+    if (!str) {
+        return NULL;
+    }
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (str[i] >= 'A' && str[i] <= 'Z') {
+            str[i] = str[i] + ('a' - 'A');
+        }
+    }
+    return str;
+}
+
+//C02-09
+int  is_char_alpha(char c){
+    if(('a'<= c)&&(c<='z')) return 1;
+    if(('A'<= c)&&(c<='Z')) return 1;
+    return 0;
+}
+
+int  is_char_lowercase(char c){
+    if(('a'<= c)&&(c<='z')) return 1;
+    return 0;
+}
+char *ft_strcapitalize(char *str){
+    //str[i] = str[i] - ('a' - 'A');
+
+    if ((is_char_alpha(str[0]))&& (is_char_lowercase(str[0])))str[0] = str[0] - ('a' - 'A');
+
+    for(int i = 1; str[i] != '\0'; i++){
+        if((!is_char_alpha(str[i-1]))&&(is_char_alpha(str[i]))){
+            if(is_char_lowercase(str[i]))str[i] = str[i] - ('a' - 'A');
+        }
+    }
+    return str;
+}
+
+//C02-10
+unsigned int ft_strlcpy(char *dest, char *src, unsigned int size){
+    unsigned size_src = 0;
+    for (int i = 0; src[i] != '\0'; i++){
+        size_src++;
+    }
+    if(size == 0) return size_src;
+    if(size_src > (size -1)){
+        for (unsigned int i = 0 ; i < size - 1; i++)dest[i] = src[i];
+        dest[size - 1] = '\0';
+    }else{
+        for (unsigned int i = 0 ; i < size_src; i++)dest[i] = src[i];
+        dest[size_src] = '\0';
+    }
+    return size_src;
+};
+
+//C02-11
+
+// void ft_puthex(int nbr){
+//     char hex_digits[] = "0123456789abcdef";
+//     if( nbr >= 16){
+//         int r = nbr % 16;
+//         int q = nbr / 16;
+//         ft_puthex(q);
+//         write(1,&hex_digits[r],1);
+
+//     }else{
+//         write(1,&hex_digits[nbr],1);
+//     }
+// }
+
+void ft_puthex(int nbr){
+    char hex_digits[] = "0123456789abcdef";
+    if( nbr >= 16){
+        int r = nbr % 16;
+        int q = nbr / 16;
+        write(1,&hex_digits[q],1);
+        write(1,&hex_digits[r],1);
+
+    }else{
+        write(1,&hex_digits[0],1);
+        write(1,&hex_digits[nbr],1);
+    }
+}
+void ft_putstr_non_printable(char *str){
+    for(int i = 0; str[i] != '\0';i++){
+        if((21 <=(int)str[i] ) && ((int)str[i] <= 126)){
+            write(1,&str[i],1);
+        }else{
+            char back = '\\';
+            write(1,&back,1);
+            ft_puthex((int)str[i]);
+        }
+    }
+};
+
+//C02-12
+void *ft_print_memory(void *addr, unsigned int size){
+    return addr;
+};

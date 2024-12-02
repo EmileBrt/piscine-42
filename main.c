@@ -3,8 +3,7 @@
 #include "ft.h"
 
 int main(){
-    char test_str[] = "to up in UPPER \n";
-    printf("test : %s \n", test_str);
-    printf("after : %s \n", ft_strupcase(test_str));
+    char test_str[100] = "Coucou\ntu vas bien ?";
+    ft_putstr_non_printable(test_str);
     return 0;
 }
