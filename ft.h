@@ -331,20 +331,6 @@ unsigned int ft_strlcpy(char *dest, char *src, unsigned int size){
 };
 
 //C02-11
-
-// void ft_puthex(int nbr){
-//     char hex_digits[] = "0123456789abcdef";
-//     if( nbr >= 16){
-//         int r = nbr % 16;
-//         int q = nbr / 16;
-//         ft_puthex(q);
-//         write(1,&hex_digits[r],1);
-
-//     }else{
-//         write(1,&hex_digits[nbr],1);
-//     }
-// }
-
 void ft_puthex(int nbr){
     char hex_digits[] = "0123456789abcdef";
     if( nbr >= 16){
@@ -370,18 +356,40 @@ void ft_putstr_non_printable(char *str){
     }
 };
 
+#include <stdio.h>
 //C02-12
-void *ft_print_memory(void *addr){
+void ft_puthex15(unsigned long nbr){
+    char hex_digits[] = "0123456789abcdef";
+    char buff [16];
+    for(int i = 0 ; i < 15 ; i ++){
+        unsigned long r = nbr % 16;
+        //write(1,&hex_digits[(int) r],1);
+        buff[14-i] = hex_digits[(int) r];
+        nbr = nbr / 16;
+    }
+    ft_putstr(buff);
+}
+
+void *ft_print_memory(void *addr, unsigned int size){
     // 00000010a161f40: 426f 6e6a 6f75 7220 6c65 7320 616d 696e Bonjour les amin
     // 00000010a161f50: 6368 6573 090a 0963 2020 6573 7420 666f ches...c est fo
+    // 000000000000000
     
-    // unsigned int q = size / 16 ;
-    // unsigned int r = size % 16 ;
-    int c = 0;
-    void **addr_of_addr = &addr;
-    while((addr_of_addr >> 4) >= 1) c++;
-
-    ft_print_numbers(c);
-
+    unsigned int q = size / 16 ;
+    unsigned int r = size % 16 ;
+    
+    for(int i = 0 ; i < (int) q ; i ++){
+        unsigned long addr_of_addr = (unsigned long) addr + (16 * i);
+        ft_puthex15(addr_of_addr);
+        write(1,": ",2);
+        write(1,"\n",1);
+    }
+    if(r != 0){
+        ft_putstr("last line \n");
+        unsigned long addr_of_addr = (unsigned long) addr + (16 * (q + 1));
+        ft_puthex15(addr_of_addr);
+        write(1,": ",2);
+        write(1,"\n",1);
+    }
     return addr;
 };
