@@ -370,25 +370,68 @@ void ft_puthex15(unsigned long nbr){
     ft_putstr(buff);
 }
 
+void ft_puthex2(char c){
+    char hex_digits[] = "0123456789abcdef";
+    int r = (int) c % 16;
+    int q = (int) c / 16;
+    write(1,&hex_digits[q],1);
+    write(1,&hex_digits[r],1);
+}
+
 void *ft_print_memory(void *addr, unsigned int size){
     // 00000010a161f40: 426f 6e6a 6f75 7220 6c65 7320 616d 696e Bonjour les amin
     // 00000010a161f50: 6368 6573 090a 0963 2020 6573 7420 666f ches...c est fo
-    // 000000000000000
+
     
+
     unsigned int q = size / 16 ;
-    unsigned int r = size % 16 ;
-    
+    unsigned int r = size % 16;
+
+    char *addr_char = (char*) addr;
+
     for(int i = 0 ; i < (int) q ; i ++){
         unsigned long addr_of_addr = (unsigned long) addr + (16 * i);
         ft_puthex15(addr_of_addr);
         write(1,": ",2);
+        for(int j = 0; j < 8; j ++){            
+            for(int k = 0; k < 2; k ++){
+                ft_puthex2(addr_char[16 * i + 2 * j + k]);
+            }
+            write(1," ",1);
+        }
+
+        for(int j = 0; j < 16; j ++){
+            if(is_char_alpha(addr_char[16 * i + j]))write(1,&addr_char[16 * i + j],1);
+            else{
+                write(1,".",1);
+            }
+        }
+
         write(1,"\n",1);
     }
     if(r != 0){
-        ft_putstr("last line \n");
         unsigned long addr_of_addr = (unsigned long) addr + (16 * (q + 1));
         ft_puthex15(addr_of_addr);
         write(1,": ",2);
+
+        for(int j = 0; j < 8; j ++){            
+            for(int k = 0; k < 2; k ++){
+                if ((16 * (int) q + 2 * j + k) < (16 * (int) q + (int) r - 1)){
+                    ft_puthex2(addr_char[16 * (int) q + 2 * j + k]);
+                }else{
+                    write(1,"  ",2);
+                }
+            }
+            if (j!=7)write(1," ",1);
+        }
+        write(1," ",1);
+        for(int j = 0; j < (int) r ; j ++){
+            
+            if(is_char_alpha(addr_char[16 * (int) q + j]))write(1,&addr_char[16 * (int) q + j],1);
+            else{
+                write(1,".",1);
+            }
+        }
         write(1,"\n",1);
     }
     return addr;
