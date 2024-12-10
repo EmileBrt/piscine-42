@@ -534,3 +534,35 @@ unsigned int ft_strlcat(char *dest, char *src, unsigned int size) {
     dest[size_dest + i] = '\0';
     return size_dest + size_src;
 }
+
+//C04-00
+// ft_strlen(char *str) done in C00
+
+//C04-01
+//void ft_putstr(char *str) done in C01
+
+//C04-02
+//void ft_putnbr(char *str) done in C00
+int ft_pow10(int n){
+    if( 0 == n) return 1;
+    return 10 * ft_pow10( n - 1);
+}
+
+//C04-03
+int ft_atoi(char *str){
+    int n = ft_strlen(str);
+    int r = 0;
+    int c = 0;
+    while(n != -1){
+        int istr = (int) str[n];
+        if((48 <= istr) && (istr <=  57)  ){
+            istr -= 48;
+            r += istr * ft_pow10(c);
+            c += 1;
+        }
+        if(45 == istr ) r *= -1;
+
+        n--;
+    }
+    return r;
+};

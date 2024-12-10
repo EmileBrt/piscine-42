@@ -2,10 +2,8 @@
 #include "ft.h"
 
 int main(){
-    char a[100] = "Hello World Hello";
-    char *b = "World";
-
-    printf("res : %s \n", ft_strstr(a,b));
-
+    char *a = "       ---+--+1234ab567";
+    int r = ft_atoi(a);
+    printf("r : %d \n", r);
     return 0;
 }
