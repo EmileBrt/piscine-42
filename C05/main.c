@@ -2,6 +2,6 @@
 #include "ft.h"
 
 int main(){
-    printf("test : %i \n",ft_sqrt(4));
+    printf("test : %i \n",ft_find_next_prime(5));
     return 0;
 }

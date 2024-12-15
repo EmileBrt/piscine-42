@@ -56,5 +56,24 @@ int ft_sqrt(int nb){
 
 //C05-06
 int ft_is_prime(int nb){
+    if( (0 == nb) || (1 == nb)) return 0;
+    for(int i = 2; i < nb ; i++){
+        if( nb % i  == 0 ) return 0;
+    }
+    return 1;
+};
 
+//C05-07
+int ft_find_next_prime(int nb){
+    int c = nb + 1;
+    while (ft_is_prime(c) != 1)
+    {
+        c ++;
+    }
+    return c;    
+};
+
+//C05-08 i got no time for playing chess
+int ft_ten_queens_puzzle(void){
+    return 0;
 };
