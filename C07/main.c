@@ -1,7 +1,13 @@
 #include <stdio.h>
 #include "ft.h"
 
-int main(){
-    printf("test : %i \n",ft_find_next_prime(5));
+int main() {
+    char *strs[] = {
+        "yes",
+        "no"
+    };
+    char *res = ft_strjoin(2, strs, "!");
+    printf("res : %s\n", res);
+    free(res);
     return 0;
 }
