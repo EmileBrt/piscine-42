@@ -2,24 +2,14 @@
 #include "ft.h"
 #include <stdio.h>
 
-int main(int argc, char *argv[]) {
-    if(argc == 4){
-        int a = atoi(argv[1]);
-        char * op = argv[2];
-        int b = atoi(argv[3]);
-        // printf("a : %i op : %s b : %i\n",a,op,b);
-        if(*op == '+')ft_putnbr(a+b);
-        if(*op == '-')ft_putnbr(a-b);
-        if(*op == '%')ft_putnbr(a%b);
-        if(*op == '*')ft_putnbr(a*b);
-        if(*op == '/'){
-            if(b != 0)ft_putnbr(a/b);
-            else{
-                ft_putstr("Stop: diving by zero \n");
-            }
-        }
-    }else{
-        ft_putstr("Wrong Number of arguments : value1 OPERATOR value2 \n");
+int main() {
+    char *tab[] = {"azer\0", "tyui\0", "qwer\0", "aaaaa\0", NULL};
+    ft_advanced_sort_string_tab(tab,ft_strcmp);
+
+    int i = 0;
+    while (tab[i] != NULL) {
+        printf("res : %s\n", tab[i]);
+        i++;
     }
     return 0;
 }

@@ -78,6 +78,46 @@ int ft_atoi(char *str) {
     return atoi(str);
 }
 
-void ft_sort_string_tab(char **tab){
-    
+int ft_strcmp(char *s1, char *s2){
+    int c = 0;
+    while((s1[c] != '\0') || (s2[c] != '\0')){
+        if(((int)s1[c]) > ((int)s2[c])) return 1;
+        if(((int)s1[c]) < ((int)s2[c])) return -1;
+        c ++;
+    }
+    return 0;
+};
+
+void ft_sort_string_tab(char **tab) {
+    int i, j;
+    char *temp;
+
+    // Bubble Sort algorithm
+    for (i = 0; tab[i] != NULL; i++) {
+        for (j = 0; tab[j + 1] != NULL; j++) {
+            if (ft_strcmp(tab[j], tab[j + 1]) > 0) {
+                // Swap the pointers
+                temp = tab[j];
+                tab[j] = tab[j + 1];
+                tab[j + 1] = temp;
+            }
+        }
+    }
+}
+
+void ft_advanced_sort_string_tab(char **tab, int(*cmp)(char *, char *)){
+    int i, j;
+    char *temp;
+
+    // Bubble Sort algorithm
+    for (i = 0; tab[i] != NULL; i++) {
+        for (j = 0; tab[j + 1] != NULL; j++) {
+            if (cmp(tab[j], tab[j + 1]) > 0) {
+                // Swap the pointers
+                temp = tab[j];
+                tab[j] = tab[j + 1];
+                tab[j + 1] = temp;
+            }
+        }
+    }
 };
