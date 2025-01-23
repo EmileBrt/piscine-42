@@ -4,20 +4,17 @@
 
 int main()
 {
-    t_list *list = NULL;
-    int data1 = 10;
-    int data2 = 20;
-
-    ft_list_push_front(&list, &data1);
-    ft_list_push_front(&list, &data2);
-    ft_list_push_front(&list, &data2);
-    ft_list_push_front(&list, &data2);
-    ft_list_push_front(&list, &data2);
-    ft_list_push_front(&list, &data2);
-    ft_list_push_front(&list, &data2);
-    ft_list_push_front(&list, &data2);
+    char *strs[] = {"azer", "azerazer"}; // Correct initialization of strs
+    t_list *list = ft_list_push_strs(2, strs);
 
     printf("size list : %i \n", ft_list_size(list));
+
+    // Free the allocated memory
+    while (list != NULL) {
+        t_list *temp = list;
+        list = list->next;
+        free(temp);
+    }
 
     return 0;
 }
