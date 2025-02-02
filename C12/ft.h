@@ -153,5 +153,32 @@ void ft_list_sort(t_list **begin_list, int (*cmp)(void *, void *)) {
 }
 
 void ft_list_reverse_fun(t_list *begin_list){
-    
+        
+};
+
+void ft_sorted_list_insert(t_list **begin_list, void *data, int (*cmp)()){
+    int n = ft_list_size(begin_list);
+    t_list * new = ft_create_elem(data);
+    int done = 0;
+    t_list * current = begin_list ; 
+    for(int i = 0; i < (n-1) ; i++){
+        if((*cmp)(current->data, data) > 0 || (*cmp)(current->next->data, data) > 1){
+            new->next = current->next;
+            current->next = new;
+            done = 1;
+        }else{
+            current = current->next;       
+        }
+        if(done == 1)break;
+    }
+    t_list * current = begin_list ; 
+    if(done != 1){
+        if((*cmp)(current->data, data) > 0 )ft_list_push_back(begin_list,data);
+        if((*cmp)(ft_list_last(begin_list)->data, data) > 0 )ft_list_push_front(begin_list,data);
+    }
+};
+
+void ft_sorted_list_merge(t_list **begin_list1, t_list *begin_list2, int (*cmp)()){
+    ft_list_merge(begin_list1,begin_list2);
+    ft_list_sort(begin_list1, (*cmp)); 
 };
