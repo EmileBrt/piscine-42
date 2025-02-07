@@ -45,5 +45,34 @@ void btree_insert_data(t_btree **root, void *item, int (*cmpf)(void *, void *)){
 }
 
 void *btree_search_item(t_btree *root, void *data_ref, int (*cmpf)(void *, void *)){
+    void * res = btree_search_item(root->left, data_ref, *cmpf);
+    if(res != NULL) return res;
+
+    if(cmpf(root->item, data_ref) == 0) return root;
+
+    void * res = btree_search_item(root->left, data_ref, *cmpf);
+    if(res != NULL) return res;
+
+    return NULL;
     
 };
+
+int btree_level_count(t_btree *root){
+    int depth,ldepth, rdepth = 0;
+
+    if(root->left != NULL) ldepth = btree_level_count(root->left);
+    if(root->right != NULL) rdepth = btree_level_count(root->right);
+
+    if(ldepth >= rdepth){
+        int depth = 1 + ldepth;
+    }else{
+        int depth = 1 + rdepth;
+    }
+    return depth;
+};
+
+void btree_apply_by_level(t_btree *root, void (*applyf)(void *item, int current_level, int is_first_elem)){
+    applyf(root->item, current_level, 1);
+    btree_apply_by_level(root->left, (*applyf)(root->right->item, ((int) current_level) + 1, 0));
+    btree_apply_by_level(root->right, (*applyf)( root->right->item, ((int) current_level) + 1, 0));
+}
