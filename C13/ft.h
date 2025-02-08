@@ -71,8 +71,79 @@ int btree_level_count(t_btree *root){
     return depth;
 };
 
-void btree_apply_by_level(t_btree *root, void (*applyf)(void *item, int current_level, int is_first_elem)){
-    applyf(root->item, current_level, 1);
-    btree_apply_by_level(root->left, (*applyf)(root->right->item, ((int) current_level) + 1, 0));
-    btree_apply_by_level(root->right, (*applyf)( root->right->item, ((int) current_level) + 1, 0));
+typedef struct s_queue_node {
+    t_btree *node;
+    int level;
+    struct s_queue_node *next;
+} t_queue_node;
+
+typedef struct {
+    t_queue_node *front;
+    t_queue_node *rear;
+} t_queue;
+
+t_queue *create_queue() {
+    t_queue *queue = (t_queue *)malloc(sizeof(t_queue));
+    queue->front = queue->rear = NULL;
+    return queue;
+}
+
+void enqueue(t_queue *queue, t_btree *node, int level) {
+    t_queue_node *new_node = (t_queue_node *)malloc(sizeof(t_queue_node));
+    new_node->node = node;
+    new_node->level = level;
+    new_node->next = NULL;
+    if (queue->rear == NULL) {
+        queue->front = queue->rear = new_node;
+    } else {
+        queue->rear->next = new_node;
+        queue->rear = new_node;
+    }
+}
+
+t_queue_node *dequeue(t_queue *queue) {
+    if (queue->front == NULL)
+        return NULL;
+    t_queue_node *temp = queue->front;
+    queue->front = queue->front->next;
+    if (queue->front == NULL)
+        queue->rear = NULL;
+    return temp;
+}
+
+int is_queue_empty(t_queue *queue) {
+    return queue->front == NULL;
+}
+
+void btree_apply_by_level(t_btree *root, void (*applyf)(void *item, int current_level, int is_first_elem)) {
+    if (root == NULL || applyf == NULL)
+        return;
+
+    t_queue *queue = create_queue();
+    enqueue(queue, root, 0);
+
+    int current_level = 0;
+    int first_of_level = 1;
+
+    while (!is_queue_empty(queue)) {
+        t_queue_node *queue_node = dequeue(queue);
+        t_btree *current_node = queue_node->node;
+        int node_level = queue_node->level;
+        free(queue_node);
+
+        if (node_level != current_level) {
+            current_level = node_level;
+            first_of_level = 1;
+        }
+
+        applyf(current_node->item, current_level, first_of_level);
+        first_of_level = 0;
+
+        if (current_node->left != NULL)
+            enqueue(queue, current_node->left, current_level + 1);
+        if (current_node->right != NULL)
+            enqueue(queue, current_node->right, current_level + 1);
+    }
+
+    free(queue);
 }
